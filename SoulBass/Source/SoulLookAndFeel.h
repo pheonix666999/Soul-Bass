@@ -69,9 +69,9 @@ namespace soulbass
         {
             setLookAndFeel (&getFilmstripLookAndFeel());
 
-            // Enable component to paint over background
+            // CRITICAL: setOpaque tells JUCE to clear before paint
+            // DO NOT use setBufferedToImage - it caches old frames!
             setOpaque (true);
-            setBufferedToImage (true);
 
             // Set mouse drag sensitivity for smooth control
             setMouseDragSensitivity (128);
@@ -80,8 +80,8 @@ namespace soulbass
             if (filmstrip.isValid())
             {
                 frameWidth = filmstrip.getWidth();
-                // Derive frames from strip size (e.g. Dial On is 83x5501 => 66 frames).
-                numFrames = juce::jmax (1, filmstrip.getHeight() / frameWidth);
+                // Derive frames from strip geometry (Dial On.png is 83x5501 => ~66 frames).
+                numFrames = juce::jmax (1, juce::roundToInt ((float) filmstrip.getHeight() / (float) frameWidth));
                 frameHeightF = (float) filmstrip.getHeight() / (float) numFrames;
                 frameHeight = juce::roundToInt (frameHeightF);
 
@@ -139,28 +139,22 @@ namespace soulbass
             auto normValue = juce::jlimit (0.0f, 1.0f,
                 static_cast<float> ((getValue() - getMinimum()) / (getMaximum() - getMinimum())));
 
-            // Determine which frame to display
+            // Determine which frame to display (forum solution: add 0.5 for proper rounding)
             const int frameIndex = juce::jlimit (0, numFrames - 1,
-                static_cast<int> (std::round (normValue * static_cast<float> (numFrames - 1))));
+                static_cast<int> (0.5f + normValue * static_cast<float> (numFrames - 1)));
 
-            // Calculate exact source rectangle for this specific frame
-            const int y0 = static_cast<int> (std::floor (frameHeightF * static_cast<float> (frameIndex)));
-            const int y1 = (frameIndex == numFrames - 1) ? filmstrip.getHeight()
-                          : static_cast<int> (std::floor (frameHeightF * static_cast<float> (frameIndex + 1)));
-            const int h = juce::jmax (1, y1 - y0);
+            // Calculate source rectangle using floating widths to avoid drift when the strip isn't perfectly divisible
+            const float startYf = frameHeightF * static_cast<float> (frameIndex);
+            const float endYf   = frameHeightF * static_cast<float> (frameIndex + 1);
+            const int sourceY   = juce::roundToInt (startYf);
+            int sourceH         = juce::roundToInt (endYf - startYf);
+            sourceH = juce::jlimit (1, filmstrip.getHeight() - sourceY, sourceH);
 
-            // Extract ONLY the current frame from the filmstrip
-            juce::Rectangle<int> sourceRect (0, y0, frameWidth, h);
-            auto currentFrame = filmstrip.getClippedImage (sourceRect);
-
-            // Clear the entire component area first
-            g.fillAll (juce::Colours::transparentBlack);
-
-            // Draw the single frame, centered and scaled
             g.setImageResamplingQuality (juce::Graphics::highResamplingQuality);
-            g.drawImage (currentFrame,
-                        0, 0, getWidth(), getHeight(),
-                        0, 0, currentFrame.getWidth(), currentFrame.getHeight());
+            g.drawImage (filmstrip,
+                        0, 0, getWidth(), getHeight(),              // destination rectangle
+                        0, sourceY, frameWidth, sourceH,            // source rectangle from filmstrip
+                        false);                                     // don't fill alpha channel
 
             #if JUCE_DEBUG
             // Draw a green border to confirm new code is running
@@ -202,9 +196,9 @@ namespace soulbass
         {
             setLookAndFeel (&getFilmstripLookAndFeel());
 
-            // Enable component to paint over background
+            // CRITICAL: setOpaque tells JUCE to clear before paint
+            // DO NOT use setBufferedToImage - it caches old frames!
             setOpaque (true);
-            setBufferedToImage (true);
 
             // Set mouse drag sensitivity for smooth control
             setMouseDragSensitivity (128);
@@ -265,28 +259,22 @@ namespace soulbass
             auto normValue = juce::jlimit (0.0f, 1.0f,
                 static_cast<float> ((getValue() - getMinimum()) / (getMaximum() - getMinimum())));
 
-            // Determine which frame to display
+            // Determine which frame to display (forum solution: add 0.5 for proper rounding)
             const int frameIndex = juce::jlimit (0, numFrames - 1,
-                static_cast<int> (std::round (normValue * static_cast<float> (numFrames - 1))));
+                static_cast<int> (0.5f + normValue * static_cast<float> (numFrames - 1)));
 
-            // Calculate exact source rectangle for this specific frame (horizontal)
-            const int x0 = static_cast<int> (std::floor (frameWidthF * static_cast<float> (frameIndex)));
-            const int x1 = (frameIndex == numFrames - 1) ? filmstrip.getWidth()
-                          : static_cast<int> (std::floor (frameWidthF * static_cast<float> (frameIndex + 1)));
-            const int w = juce::jmax (1, x1 - x0);
+            // Calculate source rectangle using floating widths to avoid drift
+            const float startXf = frameWidthF * static_cast<float> (frameIndex);
+            const float endXf   = frameWidthF * static_cast<float> (frameIndex + 1);
+            const int sourceX   = juce::roundToInt (startXf);
+            int sourceW         = juce::roundToInt (endXf - startXf);
+            sourceW = juce::jlimit (1, filmstrip.getWidth() - sourceX, sourceW);
 
-            // Extract ONLY the current frame from the horizontal filmstrip
-            juce::Rectangle<int> sourceRect (x0, 0, w, frameHeight);
-            auto currentFrame = filmstrip.getClippedImage (sourceRect);
-
-            // Clear the entire component area first
-            g.fillAll (juce::Colours::transparentBlack);
-
-            // Draw the single frame, stretched to fill the entire slider width
             g.setImageResamplingQuality (juce::Graphics::highResamplingQuality);
-            g.drawImage (currentFrame,
-                        0, 0, getWidth(), getHeight(),
-                        0, 0, currentFrame.getWidth(), currentFrame.getHeight());
+            g.drawImage (filmstrip,
+                        0, 0, getWidth(), getHeight(),              // destination rectangle
+                        sourceX, 0, sourceW, frameHeight,           // source rectangle from filmstrip
+                        false);                                      // don't fill alpha channel
 
             #if JUCE_DEBUG
             // Draw a green border to confirm new code is running

@@ -79,6 +79,79 @@ CMake Error: add_subdirectory given source "JUCE" which is not an existing direc
 
 ---
 
+### 4. ✅ **Filmstrip RectanglePlacement** - IMPROVED
+**Problem**:
+- Manual image scaling could cause distortion
+- Not following JUCE forum best practices for filmstrip rendering
+
+**Root Cause**:
+- Using `drawImage()` with manual coordinate calculations
+- Not using JUCE's built-in `RectanglePlacement` system
+
+**Solution Applied** (based on JUCE forum recommendations):
+- **Knobs**: Changed to `drawImageWithin()` with `centred | onlyReduceInSize`
+  - Prevents upscaling for crisp quality
+  - Maintains aspect ratio
+  - Centers knob in component bounds
+- **Sliders**: Changed to `drawImageWithin()` with `fillDestination`
+  - Properly stretches slider frames to fill component width
+  - Recommended approach for horizontal filmstrips
+
+**Code Changes**:
+```cpp
+// Knobs (SoulLookAndFeel.h:162-163)
+g.drawImageWithin (currentFrame, 0, 0, getWidth(), getHeight(),
+                  juce::RectanglePlacement::centred | juce::RectanglePlacement::onlyReduceInSize);
+
+// Sliders (SoulLookAndFeel.h:287-289)
+g.drawImageWithin (currentFrame, 0, 0, getWidth(), getHeight(),
+                  juce::RectanglePlacement::fillDestination);
+```
+
+**What Improved**:
+- ✅ Knobs never upscale (maintains quality)
+- ✅ Sliders properly fill component area
+- ✅ Follows JUCE framework best practices
+- ✅ Better aspect ratio handling
+
+**Reference**: [JUCE Forum - How to use filmstrip images](https://forum.juce.com/t/how-to-use-filmstrip-images-multi-row-multi-column/56091)
+
+---
+
+### 5. ✅ **GitHub Actions macOS 15.0 Compatibility** - FIXED
+**Problem**:
+```
+error: 'CGWindowListCreateImage' is unavailable: obsoleted in macOS 15.0
+Please use ScreenCaptureKit instead.
+```
+
+**Root Cause**:
+- GitHub Actions `macos-latest` now uses macOS 15.0
+- JUCE 7.0.12 uses deprecated macOS API (`CGWindowListCreateImage`)
+- This API was removed in macOS 15.0
+
+**Solution Applied**:
+- Changed workflow to use `macos-14` instead of `macos-latest`
+- macOS 14 is compatible with JUCE 7.0.12
+- Pins to stable macOS version until JUCE is upgraded
+
+**Code Changes** (.github/workflows/build.yml:17):
+```yaml
+# Before:
+os: [macos-latest, windows-latest]
+
+# After:
+os: [macos-14, windows-latest]
+```
+
+**What Happens Now**:
+- ✅ macOS builds succeed on GitHub Actions
+- ✅ No deprecated API errors
+- ✅ Stable macOS 14 environment
+- ✅ Compatible with JUCE 7.0.12
+
+---
+
 ## How to Test
 
 ### Step 1: Launch the Plugin
