@@ -1,0 +1,60 @@
+# Build directories
+/build/
+/cmake-build-*/
+
+# CMake generated files
+/CMakeCache.txt
+/CMakeFiles/
+cmake_install.cmake
+CTestTestfile.cmake
+Makefile
+
+# JUCE generated artefacts
+/SoulBass_artefacts/
+/JuceLibraryCode/
+
+# IDE and editor files
+.vs/
+.idea/
+.vscode/
+*.VC.db
+*.VC.opendb
+*.vcxproj.user
+*.suo
+*.user
+*.swp
+*~
+
+# Binaries and packages
+*.exe
+*.dll
+*.lib
+*.pdb
+*.ilk
+*.exp
+*.app
+*.dmg
+*.pkg
+*.component
+*.vst3
+*.a
+*.o
+*.obj
+*.so
+*.zip
+*.tar
+*.gz
+
+# OS cruft
+.DS_Store
+Thumbs.db
+
+Soul Bass 2 new samples/
+SoulBassII-Assets-112525/
+# Build directories
+/build/
+/cmake-build-*/
+# JUCE generated artefacts
+/SoulBass_artefacts/
+/JuceLibraryCode/
+/JUCE/

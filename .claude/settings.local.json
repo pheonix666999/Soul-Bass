@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmake --version:*)",
+      "Bash(ninja:*)",
+      "Bash(cmake:*)",
+      "Bash(\"/c/Windows/System32/where.exe\" cl)",
+      "Bash(\"/c/MinGW/bin/g++.exe\" --version)",
+      "Bash(clang --version:*)",
+      "Bash(/c/Windows/System32/reg.exe query HKLMSOFTWAREMicrosoftVisualStudio)",
+      "Bash(start \"\" \"H:\\PROJECTS\\Fiverr\\VST\\build\\SoulBass_artefacts\\Release\\Standalone\\Soul Bass.exe\")",
+      "Bash(magick identify:*)",
+      "Bash(del \"H:\\PROJECTS\\Fiverr\\VST\\build\\SoulBass_artefacts\\Release\\Standalone\\Soul Bass.exe\")",
+      "Bash(dir /b \"H:\\PROJECTS\\Fiverr\\VST\\SoulBassII-Assets-112525\\Toggles\"\")",
+      "Bash(dir \"H:\\PROJECTS\\Fiverr\\VST\\SoulBassII-Assets-112525\\Toggles\"\")",
+      "Bash(dir:*)",
+      "Bash(test -f:*)"
+    ]
+  }
+}
