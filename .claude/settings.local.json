@@ -21,7 +21,9 @@
       "Bash(dir \"build\\SoulBass_artefacts\\Debug\\Standalone\"\" 2>nul | findstr /i \".exe \")",
       "Bash(taskkill:*)",
       "Bash(tasklist:*)",
-      "Bash(start \"\" \"build/SoulBass_artefacts/Release/Standalone/Soul Bass.exe\")"
+      "Bash(start \"\" \"build/SoulBass_artefacts/Release/Standalone/Soul Bass.exe\")",
+      "Bash(python:*)",
+      "Bash(start \"\" \"H:\\PROJECTS\\Fiverr\\VST\\build\\SoulBass_artefacts\\Debug\\Standalone\\Soul Bass.exe\")"
     ]
   }
 }

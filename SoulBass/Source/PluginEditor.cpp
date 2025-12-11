@@ -334,8 +334,9 @@ void SoulBassAudioProcessorEditor::paint (juce::Graphics& g)
 void SoulBassAudioProcessorEditor::resized()
 {
     // UI sizing - bigger knobs, proper slider heights for filmstrip display
-    const int sliderW = 120;
-    const int sliderH = 20;          // Taller to show filmstrip properly
+    // Slider filmstrip frames are 112x14 pixels (aspect ratio ~8:1)
+    const int sliderW = 112;
+    const int sliderH = 14;
     const int knobSize = 55;         // Main knobs (EQ, Dynamics) - BIGGER
     const int smallKnobSize = 48;    // Side panel knobs - BIGGER
     const int toggleW = 40;          // Toggle width to show filmstrip properly

@@ -206,8 +206,9 @@ namespace soulbass
             filmstrip = loadImageFromBinary (filmstripFileName);
             if (filmstrip.isValid())
             {
-                frameHeight = filmstrip.getHeight();
-                numFrames = 63; // design intent
+                frameHeight = filmstrip.getHeight();  // 14 pixels
+                // Slider filmstrips are 14177x14 with 127 frames of ~112x14 each
+                numFrames = 127;
                 frameWidthF = (float) filmstrip.getWidth() / (float) numFrames;
                 frameWidth = juce::roundToInt (frameWidthF);
 
@@ -298,10 +299,10 @@ namespace soulbass
     private:
         juce::Image filmstrip;
         juce::String assetFileName;
-        float frameWidthF = 127.0f;
-        int frameWidth = 0;
+        float frameWidthF = 111.63f;  // 14177 / 127 frames
+        int frameWidth = 112;
         int frameHeight = 14;
-        int numFrames = 0;
+        int numFrames = 127;
     };
 
     //==============================================================================
