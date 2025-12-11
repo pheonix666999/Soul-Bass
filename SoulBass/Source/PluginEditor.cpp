@@ -251,8 +251,8 @@ void SoulBassAudioProcessorEditor::paint (juce::Graphics& g)
     g.drawText ("CHORUS", 695, 172, 70, 15, juce::Justification::left);
     g.drawText ("DELAY", 695, 258, 70, 15, juce::Justification::left);
     g.drawText ("LEGATO", 25, 312, 70, 15, juce::Justification::left);
-    g.drawText ("REVERB", 320, 312, 70, 15, juce::Justification::left);
-    g.drawText ("FILTER", 25, 428, 50, 15, juce::Justification::left);
+    g.drawText ("REVERB", 325, 312, 70, 15, juce::Justification::left);
+    g.drawText ("FILTER", 25, 448, 50, 15, juce::Justification::left);
 
     // ==================== LFO Slider Labels ====================
     g.setFont (juce::Font (9.0f, juce::Font::bold));
@@ -274,56 +274,56 @@ void SoulBassAudioProcessorEditor::paint (juce::Graphics& g)
     // ==================== EQ Labels ====================
     g.setFont (juce::Font (9.0f, juce::Font::bold));
     g.setColour (juce::Colours::white.withAlpha (0.75f));
-    // Column headers above the knobs
-    g.drawText ("FREQ", 330, 80, 45, 12, juce::Justification::centred);
-    g.drawText ("GAIN", 388, 80, 45, 12, juce::Justification::centred);
-    g.drawText ("Q", 446, 80, 35, 12, juce::Justification::centred);
-    // Row labels to the left
-    g.drawText ("LOW", 295, 115, 30, 12, juce::Justification::right);
-    g.drawText ("MID", 295, 177, 30, 12, juce::Justification::right);
-    g.drawText ("HIGH", 290, 239, 35, 12, juce::Justification::right);
+    // Column headers above the knobs (aligned with knobSize=50, gap=52)
+    g.drawText ("FREQ", 325, 82, 50, 12, juce::Justification::centred);
+    g.drawText ("GAIN", 377, 82, 50, 12, juce::Justification::centred);
+    g.drawText ("Q", 429, 82, 50, 12, juce::Justification::centred);
+    // Row labels to the left (Y positions: 98, 156, 214 + knobSize/2 for center)
+    g.drawText ("LOW", 290, 115, 30, 12, juce::Justification::right);
+    g.drawText ("MID", 290, 173, 30, 12, juce::Justification::right);
+    g.drawText ("HIGH", 285, 231, 35, 12, juce::Justification::right);
 
     // ==================== Dynamics Labels ====================
     g.setFont (juce::Font (8.0f, juce::Font::bold));
     g.setColour (juce::Colours::white.withAlpha (0.85f));
-    // Labels below knobs
-    g.drawText ("THRESHOLD", 510, 165, 55, 10, juce::Justification::centred);
-    g.drawText ("ATTACK", 582, 165, 55, 10, juce::Justification::centred);
-    g.drawText ("RATIO", 510, 233, 55, 10, juce::Justification::centred);
-    g.drawText ("RELEASE", 582, 233, 55, 10, juce::Justification::centred);
-    // Comp/Limit toggle labels
+    // Labels below knobs (Y = knobY + knobSize + 2)
+    g.drawText ("THRESHOLD", 515, 162, 50, 10, juce::Justification::centred);
+    g.drawText ("ATTACK", 580, 162, 50, 10, juce::Justification::centred);
+    g.drawText ("RATIO", 515, 227, 50, 10, juce::Justification::centred);
+    g.drawText ("RELEASE", 580, 227, 50, 10, juce::Justification::centred);
+    // Comp/Limit toggle label
     g.setFont (juce::Font (9.0f, juce::Font::bold));
-    g.drawText ("COMP/LIMIT", 540, 85, 70, 12, juce::Justification::centred);
+    g.drawText ("COMP/LIMIT", 555, 62, 70, 12, juce::Justification::centred);
 
     // ==================== Shaper Labels ====================
     g.setFont (juce::Font (8.0f, juce::Font::bold));
-    g.drawText ("DRIVE", 695, 162, 48, 10, juce::Justification::centred);
-    g.drawText ("BIAS", 752, 162, 48, 10, juce::Justification::centred);
+    g.drawText ("DRIVE", 697, 152, 42, 10, juce::Justification::centred);
+    g.drawText ("BIAS", 750, 152, 42, 10, juce::Justification::centred);
 
     // ==================== Chorus Labels ====================
-    g.drawText ("RATE", 695, 245, 48, 10, juce::Justification::centred);
-    g.drawText ("BLEND", 752, 245, 48, 10, juce::Justification::centred);
+    g.drawText ("RATE", 697, 236, 42, 10, juce::Justification::centred);
+    g.drawText ("BLEND", 750, 236, 42, 10, juce::Justification::centred);
 
     // ==================== Delay Labels ====================
-    g.drawText ("TIME", 695, 330, 48, 10, juce::Justification::centred);
-    g.drawText ("FEEDBACK", 752, 330, 55, 10, juce::Justification::centred);
+    g.drawText ("TIME", 697, 322, 42, 10, juce::Justification::centred);
+    g.drawText ("FEEDBACK", 750, 322, 50, 10, juce::Justification::centred);
 
     // ==================== Legato Labels ====================
     g.setFont (juce::Font (9.0f, juce::Font::bold));
-    g.drawText ("LEGATO", 30, 334, 65, 12, juce::Justification::left);
-    g.drawText ("RETRIGGER", 30, 360, 70, 12, juce::Justification::left);
-    g.drawText ("POLY", 165, 348, 40, 12, juce::Justification::left);
+    g.drawText ("LEGATO", 30, 338, 65, 12, juce::Justification::left);
+    g.drawText ("RETRIGGER", 30, 368, 70, 12, juce::Justification::left);
+    g.drawText ("POLY", 160, 353, 40, 12, juce::Justification::left);
 
     // ==================== Reverb Labels ====================
     g.setFont (juce::Font (8.0f, juce::Font::bold));
-    g.drawText ("BLEND", 430, 385, 48, 10, juce::Justification::centred);
-    g.drawText ("DECAY", 430, 438, 48, 10, juce::Justification::centred);
+    g.drawText ("BLEND", 435, 379, 42, 10, juce::Justification::centred);
+    g.drawText ("DECAY", 435, 429, 42, 10, juce::Justification::centred);
 
     // ==================== Filter Bar Labels ====================
     g.setFont (juce::Font (9.0f, juce::Font::bold));
-    g.drawText ("GLIDE", 225, 432, 40, 12, juce::Justification::left);
-    g.drawText ("RANGE", 410, 432, 48, 12, juce::Justification::left);
-    g.drawText ("CUTOFF", 530, 432, 50, 12, juce::Justification::left);
+    g.drawText ("GLIDE", 225, 452, 40, 12, juce::Justification::left);
+    g.drawText ("RANGE", 410, 452, 48, 12, juce::Justification::left);
+    g.drawText ("CUTOFF", 530, 452, 50, 12, juce::Justification::left);
 
     // ==================== Input/Output Labels ====================
     g.setFont (juce::Font (8.0f, juce::Font::bold));
@@ -333,14 +333,13 @@ void SoulBassAudioProcessorEditor::paint (juce::Graphics& g)
 
 void SoulBassAudioProcessorEditor::resized()
 {
-    // UI sizing - bigger knobs, proper slider heights for filmstrip display
-    // Slider filmstrip frames are 112x14 pixels (aspect ratio ~8:1)
+    // UI sizing - knob filmstrip frames are 83x83 pixels
     const int sliderW = 112;
     const int sliderH = 14;
-    const int knobSize = 55;         // Main knobs (EQ, Dynamics) - BIGGER
-    const int smallKnobSize = 48;    // Side panel knobs - BIGGER
-    const int toggleW = 40;          // Toggle width to show filmstrip properly
-    const int toggleH = 22;          // Toggle height to show filmstrip properly
+    const int knobSize = 50;         // Main knobs (scaled from 83x83 frames)
+    const int smallKnobSize = 42;    // Side panel knobs
+    const int toggleW = 40;
+    const int toggleH = 22;
     const int powerSize = 18;
 
     // ==================== LFO Section ====================
@@ -359,12 +358,12 @@ void SoulBassAudioProcessorEditor::resized()
     releaseSlider->setBounds (160, 230, sliderW, sliderH);
 
     // ==================== EQ Section ====================
-    eqPowerBtn.setBounds (460, 58, powerSize, powerSize);
+    eqPowerBtn.setBounds (475, 58, powerSize, powerSize);
 
-    int eqX = 320;
-    int eqY = 95;
-    int eqKnobGap = 58;    // Gap between knobs in row
-    int eqRowGap = 62;     // Gap between rows
+    int eqX = 325;
+    int eqY = 98;
+    int eqKnobGap = 52;    // Gap between knobs in row
+    int eqRowGap = 58;     // Gap between rows
 
     // Row 1: LOW (Freq, Gain, Q)
     eqLowKnob->setBounds (eqX, eqY, knobSize, knobSize);
@@ -382,13 +381,13 @@ void SoulBassAudioProcessorEditor::resized()
     eqHighQKnob->setBounds (eqX + eqKnobGap * 2, eqY + eqRowGap * 2, knobSize, knobSize);
 
     // ==================== DYNAMICS Section ====================
-    dynPowerBtn.setBounds (655, 58, powerSize, powerSize);
-    compLimitToggle.setBounds (548, 85, 55, toggleH);
+    dynPowerBtn.setBounds (660, 58, powerSize, powerSize);
+    compLimitToggle.setBounds (560, 82, 55, toggleH);
 
-    int dynX = 510;
-    int dynY = 108;
-    int dynGapH = 72;      // Horizontal gap
-    int dynGapV = 68;      // Vertical gap
+    int dynX = 515;
+    int dynY = 110;
+    int dynGapH = 65;      // Horizontal gap
+    int dynGapV = 65;      // Vertical gap
 
     thresholdKnob->setBounds (dynX, dynY, knobSize, knobSize);
     dynAttackKnob->setBounds (dynX + dynGapH, dynY, knobSize, knobSize);
@@ -397,37 +396,37 @@ void SoulBassAudioProcessorEditor::resized()
 
     // ==================== SHAPER Section ====================
     shaperPowerBtn.setBounds (820, 58, powerSize, powerSize);
-    shaperTypeBox.setBounds (695, 82, 90, 24);
-    driveKnob->setBounds (695, 112, smallKnobSize, smallKnobSize);
-    biasKnob->setBounds (752, 112, smallKnobSize, smallKnobSize);
+    shaperTypeBox.setBounds (695, 80, 90, 22);
+    driveKnob->setBounds (697, 108, smallKnobSize, smallKnobSize);
+    biasKnob->setBounds (750, 108, smallKnobSize, smallKnobSize);
 
     // ==================== CHORUS Section ====================
     chorusPowerBtn.setBounds (820, 172, powerSize, powerSize);
-    chorusRateKnob->setBounds (695, 195, smallKnobSize, smallKnobSize);
-    chorusBlendKnob->setBounds (752, 195, smallKnobSize, smallKnobSize);
+    chorusRateKnob->setBounds (697, 192, smallKnobSize, smallKnobSize);
+    chorusBlendKnob->setBounds (750, 192, smallKnobSize, smallKnobSize);
 
     // ==================== DELAY Section ====================
     delayPowerBtn.setBounds (820, 258, powerSize, powerSize);
-    delayTimeKnob->setBounds (695, 280, smallKnobSize, smallKnobSize);
-    delayFeedbackKnob->setBounds (752, 280, smallKnobSize, smallKnobSize);
+    delayTimeKnob->setBounds (697, 278, smallKnobSize, smallKnobSize);
+    delayFeedbackKnob->setBounds (750, 278, smallKnobSize, smallKnobSize);
 
     // ==================== LEGATO Section ====================
-    legatoToggle.setBounds (100, 332, toggleW, toggleH);
-    retriggerToggle.setBounds (100, 358, toggleW, toggleH);
-    polyBox.setBounds (205, 345, 55, 24);
+    legatoToggle.setBounds (100, 335, toggleW, toggleH);
+    retriggerToggle.setBounds (100, 365, toggleW, toggleH);
+    polyBox.setBounds (200, 350, 55, 24);
 
     // ==================== REVERB Section ====================
-    reverbPowerBtn.setBounds (460, 312, powerSize, powerSize);
-    reverbTypeBox.setBounds (320, 340, 100, 24);
-    reverbBlendKnob->setBounds (430, 335, smallKnobSize, smallKnobSize);
-    reverbDecayKnob->setBounds (430, 388, smallKnobSize, smallKnobSize);
+    reverbPowerBtn.setBounds (480, 312, powerSize, powerSize);
+    reverbTypeBox.setBounds (325, 340, 95, 22);
+    reverbBlendKnob->setBounds (435, 335, smallKnobSize, smallKnobSize);
+    reverbDecayKnob->setBounds (435, 385, smallKnobSize, smallKnobSize);
 
     // ==================== FILTER Bar ====================
-    filterTypeBox.setBounds (80, 428, 130, 26);
-    glideToggle.setBounds (265, 430, toggleW, toggleH);
-    glideDirectionBox.setBounds (320, 428, 60, 26);
-    pitchRangeBox.setBounds (460, 428, 55, 26);
-    filterTimeSlider->setBounds (580, 428, 160, sliderH);
+    filterTypeBox.setBounds (80, 448, 130, 24);
+    glideToggle.setBounds (265, 450, toggleW, toggleH);
+    glideDirectionBox.setBounds (320, 448, 60, 24);
+    pitchRangeBox.setBounds (460, 448, 55, 24);
+    filterTimeSlider->setBounds (580, 450, 160, sliderH);
 
     // ==================== Input/Output Gains ====================
     inputGainSlider.setBounds (755, 530, 30, 55);

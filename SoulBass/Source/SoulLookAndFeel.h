@@ -69,9 +69,9 @@ namespace soulbass
         {
             setLookAndFeel (&getFilmstripLookAndFeel());
 
-            // CRITICAL: setOpaque tells JUCE to clear before paint
-            // DO NOT use setBufferedToImage - it caches old frames!
-            setOpaque (true);
+            // Don't use setOpaque - filmstrip frames have transparency
+            // Don't use setBufferedToImage - it caches old frames
+            setOpaque (false);
 
             // Set mouse drag sensitivity for smooth control
             setMouseDragSensitivity (128);
@@ -80,8 +80,8 @@ namespace soulbass
             if (filmstrip.isValid())
             {
                 frameWidth = filmstrip.getWidth();
-                // Derive frames from strip geometry (Dial On.png is 83x5501 => ~66 frames).
-                numFrames = juce::jmax (1, juce::roundToInt ((float) filmstrip.getHeight() / (float) frameWidth));
+                // Dial On.png is 83x5501 => 66 frames of 83x83 pixels
+                numFrames = 66;  // Fixed frame count for Dial On.png
                 frameHeightF = (float) filmstrip.getHeight() / (float) numFrames;
                 frameHeight = juce::roundToInt (frameHeightF);
 
@@ -106,14 +106,8 @@ namespace soulbass
 
         void paint (juce::Graphics& g) override
         {
-            #if JUCE_DEBUG
-            static bool firstPaint = true;
-            if (firstPaint)
-            {
-                DBG ("FilmstripKnob::paint() called for: " << assetFileName);
-                firstPaint = false;
-            }
-            #endif
+            // Clear the background with parent's background color to prevent frame stacking
+            g.fillAll (juce::Colour::fromRGB (28, 25, 38));
 
             if (!filmstrip.isValid() || numFrames <= 0)
             {
@@ -196,9 +190,8 @@ namespace soulbass
         {
             setLookAndFeel (&getFilmstripLookAndFeel());
 
-            // CRITICAL: setOpaque tells JUCE to clear before paint
-            // DO NOT use setBufferedToImage - it caches old frames!
-            setOpaque (true);
+            // Don't use setOpaque - allows proper background clearing
+            setOpaque (false);
 
             // Set mouse drag sensitivity for smooth control
             setMouseDragSensitivity (128);
