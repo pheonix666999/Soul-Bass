@@ -19,8 +19,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - name: Checkout JUCE
+        uses: actions/checkout@v4
         with:
-          submodules: recursive
+          repository: juce-framework/JUCE
+          path: JUCE
+          ref: 7.0.12
 
       - name: Install Ninja (macOS)
         if: runner.os == 'macOS'

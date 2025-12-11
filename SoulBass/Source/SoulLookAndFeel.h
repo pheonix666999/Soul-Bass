@@ -69,8 +69,9 @@ namespace soulbass
         {
             setLookAndFeel (&getFilmstripLookAndFeel());
 
-            // Disable default component opacity to prevent background fills
-            setOpaque (false);
+            // Enable component to paint over background
+            setOpaque (true);
+            setBufferedToImage (true);
 
             // Set mouse drag sensitivity for smooth control
             setMouseDragSensitivity (128);
@@ -114,9 +115,6 @@ namespace soulbass
             }
             #endif
 
-            // Clear the background first (transparent)
-            g.fillAll (juce::Colours::transparentBlack);
-
             if (!filmstrip.isValid() || numFrames <= 0)
             {
                 // Fallback rendering when asset fails to load
@@ -155,11 +153,14 @@ namespace soulbass
             juce::Rectangle<int> sourceRect (0, y0, frameWidth, h);
             auto currentFrame = filmstrip.getClippedImage (sourceRect);
 
-            // Draw the single frame, scaled to component size
+            // Clear the entire component area first
+            g.fillAll (juce::Colours::transparentBlack);
+
+            // Draw the single frame, centered and scaled
             g.setImageResamplingQuality (juce::Graphics::highResamplingQuality);
             g.drawImage (currentFrame,
-                        getLocalBounds().toFloat(),
-                        juce::RectanglePlacement::centred | juce::RectanglePlacement::onlyReduceInSize);
+                        0, 0, getWidth(), getHeight(),
+                        0, 0, currentFrame.getWidth(), currentFrame.getHeight());
 
             #if JUCE_DEBUG
             // Draw a green border to confirm new code is running
@@ -201,8 +202,9 @@ namespace soulbass
         {
             setLookAndFeel (&getFilmstripLookAndFeel());
 
-            // Disable default component opacity to prevent background fills
-            setOpaque (false);
+            // Enable component to paint over background
+            setOpaque (true);
+            setBufferedToImage (true);
 
             // Set mouse drag sensitivity for smooth control
             setMouseDragSensitivity (128);
@@ -241,9 +243,6 @@ namespace soulbass
             }
             #endif
 
-            // Clear the background first (transparent)
-            g.fillAll (juce::Colours::transparentBlack);
-
             if (!filmstrip.isValid() || numFrames <= 0)
             {
                 // Fallback rendering when asset fails to load
@@ -280,11 +279,14 @@ namespace soulbass
             juce::Rectangle<int> sourceRect (x0, 0, w, frameHeight);
             auto currentFrame = filmstrip.getClippedImage (sourceRect);
 
-            // Draw the single frame, scaled to fill component bounds
+            // Clear the entire component area first
+            g.fillAll (juce::Colours::transparentBlack);
+
+            // Draw the single frame, stretched to fill the entire slider width
             g.setImageResamplingQuality (juce::Graphics::highResamplingQuality);
             g.drawImage (currentFrame,
-                        getLocalBounds().toFloat(),
-                        juce::RectanglePlacement::fillDestination);
+                        0, 0, getWidth(), getHeight(),
+                        0, 0, currentFrame.getWidth(), currentFrame.getHeight());
 
             #if JUCE_DEBUG
             // Draw a green border to confirm new code is running

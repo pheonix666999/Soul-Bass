@@ -14,7 +14,11 @@
       "Bash(dir /b \"H:\\PROJECTS\\Fiverr\\VST\\SoulBassII-Assets-112525\\Toggles\"\")",
       "Bash(dir \"H:\\PROJECTS\\Fiverr\\VST\\SoulBassII-Assets-112525\\Toggles\"\")",
       "Bash(dir:*)",
-      "Bash(test -f:*)"
+      "Bash(test -f:*)",
+      "Bash(test:*)",
+      "Bash(cmake --build:*)",
+      "Bash(cat:*)",
+      "Bash(dir \"build\\SoulBass_artefacts\\Debug\\Standalone\"\" 2>nul | findstr /i \".exe \")"
     ]
   }
 }
